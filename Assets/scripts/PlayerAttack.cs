@@ -1,27 +1,68 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
-    public float speed = 8f;
+    public GameObject projectilePrefab;
+    public float attackInterval = 1f;
+    public float projectileSpeed = 8f;
 
-    private Vector2 direction;
-
-    public void Start() {
-        this.alvo = GameObject.FindWithTags("En");
-    }
-
-    public void SetDirection(Vector2 novaDirecao)
-    {
-        direction = novaDirecao.normalized;
-    }
+    private float attackTimer;
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, alvo.transform.position, speed * Time.deltaTime);
+        attackTimer += Time.deltaTime;
+
+        if (attackTimer >= attackInterval)
+        {
+            Atacar();
+            attackTimer = 0f;
+        }
     }
 
-    void OnBecameInvisible()
+    void Atacar()
     {
-        Destroy(gameObject);
+        GameObject inimigoMaisProximo = EncontrarInimigoMaisProximo();
+
+        if (inimigoMaisProximo == null)
+            return;
+
+        GameObject tiro = Instantiate(
+            projectilePrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        Projectile projectile = tiro.GetComponent<Projectile>();
+
+        Vector2 direcao = (
+            inimigoMaisProximo.transform.position - transform.position
+        ).normalized;
+
+        projectile.SetDirection(direcao);
+        projectile.speed = projectileSpeed;
+    }
+
+    GameObject EncontrarInimigoMaisProximo()
+    {
+        GameObject[] inimigos = GameObject.FindGameObjectsWithTag("Enemy");
+
+        GameObject maisProximo = null;
+        float menorDistancia = Mathf.Infinity;
+
+        foreach (GameObject inimigo in inimigos)
+        {
+            float distancia = Vector2.Distance(
+                transform.position,
+                inimigo.transform.position
+            );
+
+            if (distancia < menorDistancia)
+            {
+                menorDistancia = distancia;
+                maisProximo = inimigo;
+            }
+        }
+
+        return maisProximo;
     }
 }

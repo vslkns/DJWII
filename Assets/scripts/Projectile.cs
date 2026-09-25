@@ -2,25 +2,43 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float velocidade = 8f;
-    public float tempoDeVida = 3f;
+    public float speed = 8f;
+    public float lifeTime = 5f;
+    private Vector2 direction;
+
+
+    public void SetDirection(Vector2 newDirection)
+    {
+        direction = newDirection.normalized;
+    }
 
     void Start()
     {
-        Destroy(gameObject, tempoDeVida);
+        Destroy(gameObject, lifeTime);
     }
 
     void Update()
     {
-        transform.Translate(Vector2.right * velocidade * Time.deltaTime);
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D outro)
+private void
+OnCollisionEnter2D(Collision2D collision)
     {
-        if (outro.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(outro.gameObject);
+            VidaDoInimigo vidaInimigo = collision.gameObject.GetComponent<VidaDoInimigo>();
+
+            if (vidaInimigo != null)
+            {
+                vidaInimigo.ReceberDano(10);
+            }
+
             Destroy(gameObject);
         }
+    }
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
