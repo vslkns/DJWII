@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class Camerajogador : MonoBehaviour
 {
     public Transform jogador;
 

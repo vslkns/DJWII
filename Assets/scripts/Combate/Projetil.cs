@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projetil : MonoBehaviour
 {
     public float speed = 8f;
     public float lifeTime = 5f;

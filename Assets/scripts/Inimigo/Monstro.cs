@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class monstro : MonoBehaviour
 {
     public float velocidade = 2f;
 
@@ -26,5 +26,21 @@ public class Enemy : MonoBehaviour
                 velocidade * Time.deltaTime
             );
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if
+        (collision.gameObject.CompareTag("Player"))
+        {
+            VidaDoJogador vida =
+            collision.gameObject.GetComponent<VidaDoJogador>();
+
+            if (vida != null)
+            {
+                vida.ReceberDano(10);
+            }
+        }
+        
     }
 }

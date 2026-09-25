@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class AtaquedoJogador : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public float attackInterval = 1f;
@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
             Quaternion.identity
         );
 
-        Projectile projectile = tiro.GetComponent<Projectile>();
+        Projetil projectile = tiro.GetComponent<Projetil>();
 
         Vector2 direcao = (
             inimigoMaisProximo.transform.position - transform.position
