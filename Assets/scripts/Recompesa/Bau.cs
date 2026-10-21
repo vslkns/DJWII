@@ -1,40 +1,48 @@
 using UnityEngine;
 
 public class Bau : MonoBehaviour
-
-   
-   privade void
-OnTriggerEnter2D(Collider2D outro)
 {
-    if(outro.CompareTag("Player"))
+    private void OnTriggerEnter2D(Collider2D outro)
     {
-        int sorteio = Random.Range(1,4);
-        if(sorteio==1)
+        if (outro.CompareTag("Player"))
         {
-            vidadejogador vida = outro.GetComponent<vidadejogador>();
-            if (vida != null) 
-            {
-                Debug.Log("Sorteio 1: Recompensa de Vida!");
-            }
-        }
+            int sorteio = Random.Range(1, 4);
 
-        else if (sorteio == 2)
-        {
-            ataquedojogador ataque = outro.GetComponent<ataquedojogador>();
-            if (ataque != null)
+            if (sorteio == 1)
             {
-                Debug.Log("Sorteio 2: Recompensa de ataque");
-            }
-        }
-        
-            else if (sorteio == 3)
-            {
-                movimentojogador movimento = outro.GetComponent<movimentojogador>();
-                if (movimento != null)
+                // Aumenta a vida atual / máxima do jogador
+                VidaDoJogador vida = outro.GetComponent<VidaDoJogador>();
+                if (vida != null)
                 {
-                    Debug.Log("Sorteio 3: Recompensa de Velocidade!");
+                    vida.vidaMaxima += 20;
+                    Debug.Log("Sorteio 1: Vida máxima aumentada!");
                 }
             }
-        Destroy(gameObject);
+            else if (sorteio == 2)
+            {
+                // Diminui o tempo entre ataques (ataca mais rápido)
+                AtaquedoJogador ataque = outro.GetComponent<AtaquedoJogador>();
+                if (ataque != null)
+                {
+                    if (ataque.attackInterval > 0.2f)
+                    {
+                        ataque.attackInterval -= 0.1f;
+                    }
+                    Debug.Log("Sorteio 2: Velocidade de ataque aumentada!");
+                }
+            }
+            else if (sorteio == 3)
+            {
+                // Aumenta a velocidade de movimento do jogador
+                MovimentJogador movimento = outro.GetComponent<MovimentJogador>();
+                if (movimento != null)
+                {
+                    movimento.velocidade += 1.5f;
+                    Debug.Log("Sorteio 3: Velocidade de movimento aumentada!");
+                }
+            }
+
+            Destroy(gameObject);
+        }
     }
 }

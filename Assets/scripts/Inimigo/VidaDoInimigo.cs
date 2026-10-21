@@ -1,10 +1,12 @@
 using UnityEngine;
 
 public class VidaDoInimigo : MonoBehaviour
-
 {
     public int vidaMaxima = 20;
     public int vidaAtual;
+
+
+    public GameObject bauPrefab;
 
     void Start()
     {
@@ -20,11 +22,15 @@ public class VidaDoInimigo : MonoBehaviour
             Morrer();
         }
     }
-    
 
-        void Morrer()
-{
-    Destroy(gameObject);
-}
+    void Morrer()
+    {
+  
+        if (bauPrefab != null)
+        {
+            Instantiate(bauPrefab, transform.position, Quaternion.identity);
+        }
 
+        Destroy(gameObject);
+    }
 }
