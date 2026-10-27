@@ -1,22 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class VidaDoJogador : MonoBehaviour
 {
     public GameObject mensagemMorte;
     public GameObject botaoRecomecar;
     public int vidaMaxima = 100;
-    private int vidaAtual;
+    public int vidaAtual;
+
+
+    public Slider barraVida;
 
     void Start()
     {
         vidaAtual = vidaMaxima;
+        AtualizarBarraVida();
     }
 
     public void ReceberDano(int dano)
     {
         vidaAtual -= dano;
-
-        Debug.Log("Vida do Jogador: " + vidaAtual);
+        AtualizarBarraVida();
 
         if (vidaAtual <= 0)
         {
@@ -24,15 +28,32 @@ public class VidaDoJogador : MonoBehaviour
         }
     }
 
+    public void Curar(int quantidade)
+    {
+        vidaAtual += quantidade;
+
+        if (vidaAtual > vidaMaxima)
+        {
+            vidaAtual = vidaMaxima;
+        }
+
+        AtualizarBarraVida();
+    }
+
+    void AtualizarBarraVida()
+    {
+        if (barraVida != null)
+        {
+            barraVida.maxValue = vidaMaxima;
+            barraVida.value = vidaAtual;
+        }
+    }
+
     void Morrer()
     {
-        Debug.Log("Jogador morreu!");
-
-        mensagemMorte.SetActive(true);
-        botaoRecomecar.SetActive(true);
-
+        if (mensagemMorte != null) mensagemMorte.SetActive(true);
+        if (botaoRecomecar != null) botaoRecomecar.SetActive(true);
         Time.timeScale = 0;
-
         gameObject.SetActive(false);
     }
 }

@@ -191,3 +191,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vidaMaxima: 20
   vidaAtual: 0
+  bauPrefab: {fileID: 3359723733028251691, guid: 8383e2d57f3744fa59d07225b5d31312, type: 3}
