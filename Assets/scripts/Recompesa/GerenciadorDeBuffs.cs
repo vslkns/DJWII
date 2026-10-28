@@ -9,7 +9,7 @@ public class GerenciadorDeBuffs : MonoBehaviour
     public Slider barraTempo;
 
     private float tempoRestante = 0f;
-    private float duracaoTotal = 15f;
+    private float duracaoTotal = 20f;
     private bool buffAtivo = false;
 
  
